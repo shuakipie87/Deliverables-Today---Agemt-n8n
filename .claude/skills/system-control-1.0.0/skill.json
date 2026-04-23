@@ -1,0 +1,20 @@
+{
+  "name": "system-control",
+  "version": "1.0.0",
+  "description": "Execute shell commands, open applications, and control the local system",
+  "author": "shuakipie",
+  "triggers": [
+    "run command",
+    "execute",
+    "open terminal",
+    "open application",
+    "launch",
+    "start"
+  ],
+  "scripts": {
+    "execute_command": "scripts/execute_command.sh",
+    "open_terminal": "scripts/open_terminal.sh",
+    "terminal_with_command": "scripts/terminal_with_command.sh",
+    "open_application": "scripts/open_application.sh"
+  }
+}

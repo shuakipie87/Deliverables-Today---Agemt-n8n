@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir /s /b \"C:\\\\D-drive-94828\\\\MY PROJECTS\\\\Jobs\\\\SirDennis\\\\evalstogo-demo-working-backup\")",
+      "Bash(npx supabase:*)"
+    ]
+  }
+}

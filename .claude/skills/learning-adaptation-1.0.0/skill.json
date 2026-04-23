@@ -1,0 +1,18 @@
+{
+  "name": "learning-adaptation",
+  "version": "1.0.0",
+  "description": "Continuous learning and adaptation system for ClawdBot to improve over time",
+  "author": "ClawdBot Enhanced",
+  "tags": ["learning", "adaptation", "ai", "improvement", "context"],
+  "triggers": {
+    "keywords": ["learn", "remember", "adapt", "improve", "feedback"],
+    "commands": ["/learn", "/remember", "/feedback", "/adapt"]
+  },
+  "capabilities": [
+    "preference-learning",
+    "context-awareness",
+    "feedback-integration",
+    "pattern-recognition",
+    "continuous-improvement"
+  ]
+}

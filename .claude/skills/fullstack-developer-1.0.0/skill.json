@@ -1,0 +1,22 @@
+{
+  "name": "fullstack-developer",
+  "version": "1.0.0",
+  "description": "Full-stack development assistant with front-end, back-end, database, and DevOps capabilities",
+  "author": "ClawdBot Enhanced",
+  "tags": ["development", "fullstack", "coding", "devops", "automation"],
+  "triggers": {
+    "keywords": ["develop", "build", "code", "fix", "debug", "deploy", "frontend", "backend", "database", "api", "fullstack"],
+    "commands": ["/dev", "/code", "/build", "/deploy", "/debug"]
+  },
+  "capabilities": [
+    "frontend-development",
+    "backend-development",
+    "database-design",
+    "api-development",
+    "devops-automation",
+    "testing",
+    "debugging",
+    "code-review",
+    "performance-optimization"
+  ]
+}
