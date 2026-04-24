@@ -463,4 +463,49 @@ Airtable v2.1: `operation: "create"`, `base: { __rl: true, value, mode: "id" }`,
 
 A brief can label a sample lead "WARM" for descriptive intent, but the actual scoring algorithm may produce a different tier when all bonuses are applied. For LEAD-1002 (group=5, session=10 days away, source=Website Form, 2 flavors): 20+20+15+10+10=75 = Hot, not Warm. Always run the scoring simulation before writing pinData. Do not trust spec tier labels — they are aspirational, not computed. The pinData must reflect what the Code node will actually output.
 
-*Last synthesized by Aria: never. Created 2026-04-21. Updated 2026-04-23.*
+### [workflow-shape] — ClearwaterPediatrics Credentialing AI Assistant (2026-04-24)
+**Platform:** n8n
+**Scope:** project:ClearwaterPediatrics_Credentialing
+**Confidence:** high
+**Source:** explicit
+**Date:** 2026-04-24
+
+17-node AI-triage workflow (+ 8 sticky notes = 25 total). Pattern: Gmail trigger → Code (FAQ embed) → OpenAI LLM → Code (parse+validate) → Switch (4 outputs) → branch preps → Gmail drafts → merge draft links → unified Google Sheets append. All branches converge at one Sheets node. typeVersions confirmed for n8n 2.17.1: gmailTrigger=1, gmail=2, code=2, switch=3, googleSheets=4, stickyNote=1, langchain.openAi=1. Folder: `ClearwaterPediatrics_Credentialing/`.
+
+### [node-config] — openAi LangChain node for structured JSON classification (2026-04-24)
+**Platform:** n8n
+**Scope:** global
+**Confidence:** high
+**Source:** explicit
+**Date:** 2026-04-24
+
+`@n8n/n8n-nodes-langchain.openAi` typeVersion 1 used for direct LLM calls (not chainLlm). Messages configured under `messages.values[]` array with `role` and `content` fields. `options.responseFormat.type: "json_object"` enforces JSON-only output. Temperature 0.1 for classification tasks. LLM response comes back as `$json.content` string — must parse with `JSON.parse()` in a downstream Code node. This is the correct pattern when you need a quick LLM call without sub-node wiring.
+
+### [convention] — Draft-not-send pattern for healthcare HR automations (2026-04-24)
+**Platform:** n8n
+**Scope:** global
+**Confidence:** high
+**Source:** observation
+**Date:** 2026-04-24
+
+In healthcare HR workflows, all Gmail actions should use operation `createDraft` (NOT send). This ensures no automated email leaves without human review — critical for compliance. The draft link is captured from the response ID and stored in the audit log so the reviewer can open it in one click. Pattern: Gmail node (createDraft) → Code node (merge draft link = `https://mail.google.com/mail/#drafts/${id}`).
+
+### [anti-pattern] — Counting functional nodes vs total nodes in scorecards (2026-04-24)
+**Platform:** n8n
+**Scope:** global
+**Confidence:** high
+**Source:** observation
+**Date:** 2026-04-24
+
+Sticky notes are nodes in n8n JSON (`n8n-nodes-base.stickyNote`) and count toward `nodes[]` array length. When reporting "node count" to a client, clarify: "17 functional nodes + 8 sticky notes = 25 total." Always run a programmatic count (Python json.load + filter by type) before quoting node counts in scorecards or deliverables to avoid the arithmetic error seen in HearthAndVine.
+
+### [anti-pattern] — Top-level pinData {} empty even when per-node pinData is populated (2026-04-24 QA)
+**Platform:** n8n
+**Scope:** global
+**Confidence:** high
+**Source:** explicit (QA audit — ClearwaterPediatrics Credentialing)
+**Date:** 2026-04-24
+
+A workflow can have correct per-node `pinData` arrays on every functional node yet still fail the top-level `wf['pinData']` check because the two locations are independent. n8n 2.x reads the top-level key for "execute from pin" in the editor. Fix: iterate `wf['nodes']`, collect each non-sticky node's `pinData` array, key by `node['name']`, write to `wf['pinData']`. Always run `assert [n for n in non_sticky_names if n not in wf['pinData']] == []` before delivery. This is a second occurrence after the StarlightSpectacles audit — treat it as a mandatory step in every n8n workflow QA checklist.
+
+*Last synthesized by Aria: never. Created 2026-04-21. Updated 2026-04-24.*
